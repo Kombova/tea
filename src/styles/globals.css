@@ -5,3 +5,9 @@
 body {
     @apply text-lg 
 }
+.menu-item {
+    @apply  decoration-2 hover:underline hover:underline-offset-4 hover:decoration-main-green
+  }
+.active {
+    @apply underline underline-offset-4 decoration-main-green text-tea-green
+}
