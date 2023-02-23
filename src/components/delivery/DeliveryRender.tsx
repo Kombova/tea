@@ -2,7 +2,7 @@ const Delivery = () =>{
     return(
     <div className=' bg-hunter-green shadow-sm'> 
         <div className=' max-w-7xl mx-auto text-white'>
-            <p>asd</p>
+            <p>asdвыавыа</p>
         </div>
     </div>
     )
