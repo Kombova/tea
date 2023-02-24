@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { start } from "repl";
 
-import novaPoshta_icon from './npLogo.png';
-import ukrPoshta_icon from './Ukrposhta-ua.svg.png';
-import manualPoshta_icon from './mapPoint.png'
+import novaPoshta_icon from '../../../public/npLogo.png';
+import ukrPoshta_icon from '../../../public/Ukrposhta-ua.svg.png';
+import manualPoshta_icon from '../../../public/mapPoint.png';
 import { useEffect, useState } from "react";
 
 const DeliveryRender = () =>{
