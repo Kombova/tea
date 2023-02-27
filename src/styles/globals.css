@@ -11,5 +11,11 @@ body {
 .active {
     @apply underline underline-offset-4 decoration-main-green text-tea-green
 }
+.styleOfDeliveryForms{
+   @apply w-[500px] h-[60px] border-2 bg-slate-200  rounded-lg text-center max-[530px]:w-[300px]
+}
+.styleOfDeliveryButtons{
+    @apply w-[500px] h-[60px] border-2 bg-green-700  rounded-lg text-center max-[530px]:w-[300px]
+}
 
 

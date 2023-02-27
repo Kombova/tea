@@ -1,4 +1,4 @@
-import DeliveryRender from "@/components/deliveyRender/deliveryRender";
+import DeliveryRender from "@/components/Delivery";
 const Delivery = () =>{
     return(
         <DeliveryRender/>
