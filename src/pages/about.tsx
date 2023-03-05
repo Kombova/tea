@@ -1,8 +1,11 @@
 import About from "@/components/About";
 
 const showAbout = () =>{
-    return(
-        <About/>
+    return(<>
+    
+    <About/>
+    
+    </>
     )
 }
 export default showAbout;

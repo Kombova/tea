@@ -1,10 +1,10 @@
-import Image from "next/image"
+import Image from "next/image";
 
 const About = () =>{
     const myLoader = ({ src, width, quality }:any) => {
         return `https://static.wixstatic.com/media/1a0fcb_427782815a0f42389b0905009fde1c3c~mv2.jpg/v1/fill/${src}?w=${width}&q=${quality || 75}`
       }
-    
+      
     return(
         <div className=" w-full mt-[40px] mb-[20px]">
             <div className=' max-w-7xl mx-auto '>
