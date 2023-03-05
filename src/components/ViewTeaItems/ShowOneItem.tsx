@@ -9,6 +9,7 @@ const ShowOneItem = ({objItem}:any) =>{
     const myLoader = ({ src, width, quality }:any) => {
         return `${apiRequest.fetchAdressImg}${src}?w=${width}&q=${quality || 75}`
       }
+// batton в зависимости от  typeAmount
     function typeAmountButton(objItem:any){
         switch (objItem.typeAmount) {
             case 'грамм':
