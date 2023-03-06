@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import Image from "next/image";
 import { apiRequest } from "@/services/services";
 import IItem from "@/Interface/IItem";
+import { valueCart } from "@/logic/shoppingСart/shoppingСart";
+
 
 
 const ShowOneItem = ({objItem}:any) =>{
     const[amount,setAmount]=useState(objItem.stepAmount)
+    ;
     const myLoader = ({ src, width, quality }:any) => {
         return `${apiRequest.fetchAdressImg}${src}?w=${width}&q=${quality || 75}`
       }
@@ -15,11 +18,11 @@ const ShowOneItem = ({objItem}:any) =>{
             case 'грамм':
                 if(objItem.arrSteps.length > 0){
                     let arrStepLayout = objItem.arrSteps.map((Step:string)=>{                    
-                        return(<button key={Step} className="w-[70px] border-2 rounded-[20px] text-[15px]" onClick={(e)=>addSpecificValue(e)}>+{Step}</button>                                                )
+                        return(<button key={Step} className="w-[70px]  border-2 rounded-[20px] text-[15px]" onClick={(e)=>addSpecificValue(e)}>+{Step}</button>                                                )
                     })
                     return arrStepLayout  
                 }else{
-                    return(<button className="w-[100px] border-2 rounded-[20px]" onClick={(e)=>addSpecificValue(e)}>{objItem.stepAmount}</button>) // Кнопка грамм без массива шагов
+                    return(<button className="w-[100px] border-2 rounded-[20px]" onClick={(e)=>addSpecificValue(e)}>+{objItem.stepAmount}</button>) // Кнопка грамм без массива шагов
                 }
                 break;
             default:
@@ -51,6 +54,11 @@ const ShowOneItem = ({objItem}:any) =>{
         console.log(target)
         setAmount((amount:number)=>+amount + +target.textContent)
     }
+    // Добавление в корзину
+    let AddToCart = () =>{    
+        valueCart.push(objItem)    
+        
+    }
 
     return(
         <li className="w-[300px] h-[400px] border-2 text-center relative">
@@ -62,16 +70,16 @@ const ShowOneItem = ({objItem}:any) =>{
                 width={200}
                 height={100}
             />
-            <h4 > {objItem.title}</h4>
-            <button className="w-[60px] border-2 rounded-l-[20px]" onClick={(e)=>minusAmount(e)}>-</button>
+            <h4 className=" font-extrabold">{objItem.title}</h4>
+            <h3 className="w-[100px] mx-auto mb-[10px] border-l-2 border-r-2 font-[Pacifico]">{objItem.type}</h3>
+            <button className="w-[60px] border-2 rounded-l-[20px]" onClick={(e)=> minusAmount(e)}>-</button>
                 <input className="w-[50px] mx-auto mb-[10px] border-t-2 border-b-2 text-center " placeholder={objItem.stepAmount} value={amount} onChange={(e)=>handleChange(e)} />
 
-            <button className="w-[60px] border-2 rounded-r-[20px]" onClick={(e)=>plusAmount(e)}>+</button>
+            <button className="w-[60px] border-2 rounded-r-[20px]" onClick={(e)=> plusAmount(e)}>+</button>
                 <br/>
-            <div className=" pl-[10px] pr-[10px] flex justify-center gap-1">{typeAmountButton(objItem)}</div>
-            <div className=" absolute right-0 bottom-0 pr-1">{objItem.price} грн/{objItem.typeAmount}</div>
-              
-            
+            <div className=" pl-[10px] pr-[10px] flex flex-wrap justify-center gap-1">{typeAmountButton(objItem)}</div>
+            <div className=" absolute right-0 bottom-0 pr-1 text-[13px]">{objItem.price} грн/{objItem.typeAmount}</div>
+            <button className=" w-[170px] bg-hunter-green text-[white] border-2 rounded-[20px] text-[15px] absolute left-1 bottom-1" onMouseDown={(e)=>e.target.style.borderWidth='0px'} onMouseUp={(e)=>e.target.style.borderWidth='2px'} onClick={()=> AddToCart()}>Додати до корзини</button>
             
         </li>
     )

@@ -17,8 +17,7 @@ const ViewAllItems = () =>{
         viewAllItems = data.map((item) => {
             return <ShowOneItem key={item.id} objItem={item} />;
         })
-        setConnectingArrDB(data)
-        console.log(data)
+        setConnectingArrDB(data)    
     }
    
 
@@ -26,8 +25,7 @@ const ViewAllItems = () =>{
     return(
         <div className=" w-full"> 
             <ul className=" max-w-[1440px] pt-[20px] pb-[20px] mx-auto flex flex-wrap gap-2 justify-center items-center border-2">  
-                {apiRequest.loadingData ? <Image src={loading_gif} className='w-full' alt="Picture of the author" width={300} height={200} quality={100}/> : null}
-                {!apiRequest.loadingData ? viewAllItems : null}     
+                {connectingArrDB.length == 0 ? <Image src={loading_gif} className='w-full' alt="Picture of the author" width={300} height={200} quality={100}/> : viewAllItems}
             </ul>
         </div>
         
