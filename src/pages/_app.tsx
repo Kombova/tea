@@ -1,13 +1,18 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import { useState } from 'react';
+// import redux
+import { Provider } from 'react-redux'
+import { store } from '@/store'
+// мои импорты
 import Layout from '../components/layout/layout'
-import { valueCart } from '@/logic/shoppingСart/shoppingСart';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
+    
   )
 }

@@ -1,18 +1,18 @@
-import { useReducer, useState } from "react";
+import {  useState } from "react";
 import Image from "next/image";
 import { apiRequest } from "@/services/services";
-import IItem from "@/Interface/IItem";
-import { valueCart } from "@/logic/shoppingСart/shoppingСart";
 
-
-
+import {addCountToCart,addItemToCart,changeItemToCart} from '../../actions'
+import { useDispatch } from "react-redux";
+import { store } from "@/store";
 const ShowOneItem = ({objItem}:any) =>{
-    const[amount,setAmount]=useState(objItem.stepAmount)
-    ;
+    const[amount,setAmount]=useState(objItem.stepAmount);
     const myLoader = ({ src, width, quality }:any) => {
         return `${apiRequest.fetchAdressImg}${src}?w=${width}&q=${quality || 75}`
       }
+    const dispath = useDispatch()
 // batton в зависимости от  typeAmount
+    let itemPrice = amount * objItem.price
     function typeAmountButton(objItem:any){
         switch (objItem.typeAmount) {
             case 'грамм':
@@ -32,7 +32,7 @@ const ShowOneItem = ({objItem}:any) =>{
 // Элементы управления значением количества товара  
     let plusAmount = (e:any) =>{
         let target =  e.target;
-            
+        
         setAmount((amount:number)=>+amount + +objItem.stepAmount)
     }
     let minusAmount = (e:any) =>{
@@ -51,19 +51,43 @@ const ShowOneItem = ({objItem}:any) =>{
     }
     let addSpecificValue = (e:any) =>{
         let target =  e.target;
-        console.log(target)
         setAmount((amount:number)=>+amount + +target.textContent)
     }
     // Добавление в корзину
-    let AddToCart = () =>{    
-        valueCart.push(objItem)    
-        
-    }
+    let AddToCart = (e) =>{    
 
+       let lengthShopingArr = store.getState().shopingArr.length;
+       let purchasedItems;
+       let bool;
+       
+       if(lengthShopingArr === 0){
+            purchasedItems = {objItem, piecesPurchased: +amount, itemPrice: +itemPrice};
+            dispath(addItemToCart(purchasedItems))
+            dispath(addCountToCart()) 
+       }else if(lengthShopingArr != 0){
+            for (let index = 0; index < store.getState().shopingArr.length; index++) {
+                const element = store.getState().shopingArr[index];
+                    if(element.objItem.id === objItem.id){
+                        dispath(changeItemToCart(objItem.id,+amount,itemPrice))
+                        
+                        bool=false
+                        break
+                    }
+                     bool=true
+            }
+        if(bool === true){
+            purchasedItems = {objItem, piecesPurchased: +amount, itemPrice: +itemPrice};
+            dispath(addItemToCart(purchasedItems))
+            dispath(addCountToCart()) 
+            
+        }
+       }
+
+    }
     return(
         <li className="w-[300px] h-[400px] border-2 text-center relative">
             <Image
-                className="mx-auto mt-1 border-2"
+                className="img mx-auto mt-1 border-2"
                 loader={myLoader}
                 src={objItem.images[0]}
                 alt="Picture of the author"
@@ -78,8 +102,9 @@ const ShowOneItem = ({objItem}:any) =>{
             <button className="w-[60px] border-2 rounded-r-[20px]" onClick={(e)=> plusAmount(e)}>+</button>
                 <br/>
             <div className=" pl-[10px] pr-[10px] flex flex-wrap justify-center gap-1">{typeAmountButton(objItem)}</div>
+            <div className="absolute border-2 right-1 bottom-8">{itemPrice} грн</div>
             <div className=" absolute right-0 bottom-0 pr-1 text-[13px]">{objItem.price} грн/{objItem.typeAmount}</div>
-            <button className=" w-[170px] bg-hunter-green text-[white] border-2 rounded-[20px] text-[15px] absolute left-1 bottom-1" onMouseDown={(e)=>e.target.style.borderWidth='0px'} onMouseUp={(e)=>e.target.style.borderWidth='2px'} onClick={()=> AddToCart()}>Додати до корзини</button>
+            <button className=" w-[170px] bg-hunter-green text-[white] border-2 rounded-[20px] text-[15px] absolute left-1 bottom-1" onMouseDown={(e)=>e.target.style.borderWidth='0px'} onMouseUp={(e)=>e.target.style.borderWidth='2px'} onClick={(e)=> AddToCart(e)}>Додати до корзини</button>
             
         </li>
     )
