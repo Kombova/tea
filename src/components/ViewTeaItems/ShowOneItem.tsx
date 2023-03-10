@@ -55,7 +55,7 @@ const ShowOneItem = ({objItem}:any) =>{
     }
     // Добавление в корзину
     let AddToCart = (e) =>{    
-
+        
        let lengthShopingArr = store.getState().shopingArr.length;
        let purchasedItems;
        let bool;

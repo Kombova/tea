@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { apiRequest } from "@/services/services";
 import { useDispatch } from "react-redux";
-import { deleteItemToCart } from "@/actions";
+import { deleteItemToCart, minusCountToCart } from "@/actions";
 import { store } from "@/store";
 const OneItemCart = ({item}:any) =>{
     console.log(item)
@@ -11,6 +11,7 @@ const OneItemCart = ({item}:any) =>{
       }
     let deleteItem = (itemId:any) =>{
         dispath(deleteItemToCart(itemId))
+        dispath(minusCountToCart())
         
     }
     

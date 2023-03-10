@@ -11,6 +11,12 @@ const basketChenge = (state = initialState,action:any) =>{
                 count: state.count + 1,
                 
             };
+    case 'MINUS_COUNT_TO_CART':
+            return{
+                ...state,
+                count: state.count - 1,
+                
+            };
     case 'ADD_ITEM_TO_CART':
             return{
                 ...state,
@@ -24,20 +30,20 @@ const basketChenge = (state = initialState,action:any) =>{
                 shopingArr: state.shopingArr.filter((item) => item.objItem.id !== action.payload)
                 
             };
-            case "CHANGE_ITEM_TO_CART":
-                return {
-                  ...state,
-                  shopingArr: state.shopingArr.map(item => {
-                    if (item.objItem.id === action.payload) {
-                      return {
-                        ...item,
-                        piecesPurchased: item.piecesPurchased + action.piecesPurchased,
-                        itemPrice: item.itemPrice + action.newPrice
-                      };
-                    }
-                    return item;
-                  })
-                };             
+    case "CHANGE_ITEM_TO_CART":
+        return {
+          ...state,
+          shopingArr: state.shopingArr.map(item => {
+            if (item.objItem.id === action.payload) {
+              return {
+                ...item,
+                piecesPurchased: item.piecesPurchased + action.piecesPurchased,
+                itemPrice: item.itemPrice + action.newPrice
+              };
+            }
+            return item;
+          })
+        };             
     
         default:
             return state;
